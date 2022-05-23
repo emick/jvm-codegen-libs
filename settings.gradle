@@ -1,0 +1,3 @@
+rootProject.name = 'jvm-typesafe-codegen'
+include 'demo-project', 'foreach-field-gen'
+
