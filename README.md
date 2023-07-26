@@ -1,8 +1,11 @@
 # jvm-typesafe-codegen
 
-Type-safety related code generation tools for JVM languages (Java, Groovy, Kotlin etc.)
+This repository provides tools to generate code to do type-safe "for each object's field" kind of loops. If e.g. a new 
+field is added, or a field is removed/renamed, the generated code will signal with compilation error and require manual
+action to handle the changed field. This is similar to IDE errors from missing cases in switch-on-enum, but more generic.
 
-E.g. tools to type-safely iterate and do action on all fields of an instance.
+The additional code is generated at compile-time using annotation processing. After initial config, no manual compilation
+is necessary. The generation should work for all JVM languages (Java, Groovy, Kotlin etc.)
 
 ## @GenerateFieldVisitor
 
@@ -46,17 +49,31 @@ and can then be used to process all fields of an instance:
 new OrderFieldProcessor(order).visitAll();
 ```
 
-## @GenerateFieldEnum
+### Real world usage
 
-Generates an enum containing all fields of the annotated class as enum values.
-
-## @GenerateFieldNames
-
-Generates a class containing all field names of the annotated class as fields.
+  * Ensure copy constructor handles all fields
+  * Serialize instance without annotations
+  * Validate instance without annotations
 
 ### Alternatives
 
-1) Java: No viable alternative
+  * (Partial:) IntelliJ IDEA checks that copy constructor handles all fields
+
+## @GenerateFieldEnum
+
+Generates an enum containing all fields of the annotated class as enum values. The enum values have a getter to return the field name as String.
+
+## @GenerateFieldNames
+
+Generates a class containing all field names of the annotated class as constant String fields.
+
+### Real world usage
+
+  * Compiler-checked field references when using reflection
+
+### Alternatives
+
+1) Java: No viable alternative without other annotation processors
 2) Kotlin natively supports: `SomeClass::someField.name`
 
 ## @GenerateTransformMapper
@@ -74,15 +91,15 @@ allows a compiler-safe way to handle added or changed fields in this kind of map
 A reflection based unit test can be made for this case in such way that the test fails on unknown fields
 and has known fields categorized to "stays same", "is nulled" etc. categories.
 
-Setup
+Usage
 -----
 
-This library is not yet published to any public repository. Use it through Maven local:
+This library is not yet published to any public repository. First publish it to Maven local:
 
 1. Clone this repository to your local machine
 2. Run `./gradlew clean publishToMavenLocal` to publish the project to Maven local repository
 
-### Usage in Gradle project 
+### Usage in a Gradle project 
 
 ```groovy
 // Import the library from maven local:
