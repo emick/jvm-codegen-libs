@@ -151,3 +151,8 @@ Limitations
   * Only classes supported. Records, interfaces etc. could be added later.
   * GraalVM is not tested and most likely not supported for all annotations due to the usage of reflection
   
+Links
+=====
+
+  * https://github.com/ryandens/auto-delegate - generate base class for proxy/decorator pattern to avoid unnecessary super-calling methods
+  * https://github.com/cmelchior/realmfieldnameshelper - Realm extension to create type-safe field references 
