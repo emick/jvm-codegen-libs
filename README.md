@@ -52,8 +52,9 @@ new OrderFieldProcessor(order).visitAll();
 ### Real world usage
 
   * Ensure copy constructor handles all fields
-  * Serialize instance without annotations
-  * Validate instance without annotations
+  * Separate serialization logic to another class (also no annotations)
+  * Separate validation logic to another class (also no annotations)
+  * Ensure that soft-delete also marks child entities as soft-deleted
 
 ### Alternatives
 
