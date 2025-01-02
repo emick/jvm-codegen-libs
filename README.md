@@ -23,7 +23,7 @@ public class Order {
 }
 ```
 
-generates an `OrderFieldVisitor` which can be extended to customize the processing
+generates an `OrderFieldVisitor` parent class which can be extended to customize the processing
 
 ```java
 public class OrderFieldProcessor extends OrderFieldVisitor {
@@ -51,9 +51,11 @@ new OrderFieldProcessor(order).visitAll();
 
 ### Real world usage
 
-  * Ensure copy constructor handles all fields
-  * Separate serialization logic to another class (also no annotations)
-  * Separate validation logic to another class (also no annotations)
+The main benefit is that a compiler checks that all fields are handled. Thus compilation will break if a field is not handled, e.g. when a field is added or renamed. This can be made to:
+
+  * Ensure that copy constructor handles all fields
+  * Separate serialization logic to another class
+  * Separate validation logic to another class
   * Ensure that soft-delete also marks child entities as soft-deleted
 
 ### Alternatives
